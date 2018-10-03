@@ -1,12 +1,12 @@
 import React from 'react'
-import ingredientType from './IngredientType'
+import IngredientList from './IngredientList'
 import './BurgerIngredient.css'
 
 const burgerIngredient = props => {
 
-  if (props.type === ingredientType.BREAD_TOP) {
+  if (props.type === IngredientList.BREAD_TOP) {
     return (
-      <div className={ingredientType.BREAD_TOP}>
+      <div className={IngredientList.BREAD_TOP}>
         <div className='Seeds1'></div>
         <div className='Seeds2'></div>
       </div>

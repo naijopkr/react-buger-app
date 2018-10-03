@@ -1,4 +1,4 @@
-const type = {
+const IngredientList = {
   BREAD_BOTTOM: 'BreadBottom',
   BREAD_TOP: 'BreadTop',
   MEAT: 'Meat',
@@ -7,4 +7,4 @@ const type = {
   BACON: 'Bacon'
 }
 
-export default type
+export default IngredientList

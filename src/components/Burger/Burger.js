@@ -1,16 +1,30 @@
 import React from 'react'
-import './burger.css'
+import './Burger.css'
 
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient'
-import ingredientType from './BurgerIngredient/IngredientType'
+import IngredientList from './BurgerIngredient/IngredientList'
 
 const burger = props => {
+  const { ingredients } = props
+  let ingredientsArray = []
+
+  for (let key in ingredients) {
+    for (let i = 0; i < ingredients[key]; i++) {
+      ingredientsArray.push(
+        <BurgerIngredient type={key} key={key + i} />
+      )
+    }
+  }
+
+  if (ingredientsArray.length === 0) {
+    ingredientsArray = <p>Please start adding ingredients!</p>
+  }
+
   return (
-    <div className='burger'>
-      <BurgerIngredient type={ingredientType.BREAD_TOP} />
-      <BurgerIngredient type={ingredientType.CHEESE} />
-      <BurgerIngredient type={ingredientType.MEAT} />
-      <BurgerIngredient type={ingredientType.BREAD_BOTTOM} />
+    <div className='Burger'>
+      <BurgerIngredient type={IngredientList.BREAD_TOP} />
+      {ingredientsArray}
+      <BurgerIngredient type={IngredientList.BREAD_BOTTOM} />
     </div>
   )
 }
