@@ -7,4 +7,11 @@ const IngredientList = {
   BACON: 'Bacon'
 }
 
+export const IngredientPrice = {
+  [IngredientList.MEAT]: 130,
+  [IngredientList.CHEESE]: 40,
+  [IngredientList.SALAD]: 50,
+  [IngredientList.BACON]: 70
+}
+
 export default IngredientList
