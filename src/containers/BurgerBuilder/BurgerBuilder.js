@@ -22,6 +22,14 @@ class BurgerBuilder extends Component {
     this.setState({ checkout: true })
   }
 
+  puchaseCancelHandler = () => {
+    this.setState({ checkout: false })
+  }
+
+  purchaseContinueHandler = () => {
+    console.log('Continue selected!')
+  }
+
   updatePurchaseState = ingredients => {
     let sum = 0
     for (let key in ingredients) {
@@ -50,8 +58,13 @@ class BurgerBuilder extends Component {
     return (
       <>
         <Modal show={this.state.checkout} 
-         modalClose={() => {this.setState({ checkout: false })}}>
-          <OrderSummary ingredients={this.state.ingredients} />
+         modalClose={this.puchaseCancelHandler}>
+          <OrderSummary 
+           ingredients={this.state.ingredients} 
+           purchaseCancel={this.puchaseCancelHandler}
+           purchaseContinue={this.purchaseContinueHandler}
+           price={this.state.totalPrice}
+          />
         </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls 
