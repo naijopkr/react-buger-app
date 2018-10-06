@@ -5,7 +5,7 @@ import './Layout.css'
 
 class Layout extends Component {
   state = {
-    showSideDrawer: true
+    showSideDrawer: false
   }
   
   closeSideDrawerHandler = () => {

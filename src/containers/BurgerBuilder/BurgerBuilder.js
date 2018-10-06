@@ -4,6 +4,7 @@ import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import IngredientList, { IngredientPrice } from '../../components/Burger/BurgerIngredient/IngredientList'
 import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
+import axios from '../../axios-orders'
 
 class BurgerBuilder extends Component {
   state = {
@@ -27,7 +28,23 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    console.log('Continue selected!')
+    const order = {
+      ingrendients: this.state.ingredients,
+      price: this.state.totalPrice,
+      customer: {
+        name: 'John Smith',
+        address: {
+          street: '1st Avenue',
+          zipCode: '121523',
+          country: 'Colombia'
+        },
+        email: 'jsmith@burger.com'
+      },
+      deliveryMethod: 'fastest'
+    }
+    axios.post('/orders.json', order)
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
   }
 
   updatePurchaseState = ingredients => {
