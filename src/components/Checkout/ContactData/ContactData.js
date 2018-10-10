@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom'
 import axios from '../../../axios-orders'
 
 import Button from '../../UI/Button/Button'
+import Spinner from '../../UI/Spinner/Spinner'
+import { IngredientPrice } from '../../Burger/BurgerIngredient/IngredientList'
 
 import './ContactData.css'
 
@@ -17,12 +19,21 @@ class ContactData extends Component {
     loading: false
   }
 
+  getPrice = () => {
+    let price = 400
+    const { ingredients } = this.state
+    for (let key in ingredients) {
+      price += ingredients[key]*IngredientPrice[key]
+    }
+    return price
+  }
+
   orderHandler = event => {
     event.preventDefault()
     this.setState({ loading: true })
     const order = {
       ingrendients: this.state.ingredients,
-      price: 400,
+      price: this.getPrice(),
       customer: {
         name: 'John Smith',
         address: {
@@ -46,18 +57,25 @@ class ContactData extends Component {
   }
 
   render = () => {
+    let form = (
+      <form>
+        <input type='text' name='name' placeholder='Your name' />
+        <input type='email' name='email' placeholder='Your e-mail' />
+        <input type='text' name='street' placeholder='Street' />
+        <input type='text' name='postal' placeholder='Postal code' />
+        <Button btnType='Success' onClick={this.orderHandler}>
+          ORDER
+        </Button>
+      </form>
+    )
+    if (this.state.loading) {
+      form = <Spinner />
+    }
+
     return (
       <div className='ContactData'>
         <h4>Enter your contact data</h4>
-        <form>
-          <input type='text' name='name' placeholder='Your name' />
-          <input type='email' name='email' placeholder='Your e-mail' />
-          <input type='text' name='street' placeholder='Street' />
-          <input type='text' name='postal' placeholder='Postal code' />
-          <Button btnType='Success' onClick={this.orderHandler}>
-            ORDER
-          </Button>
-        </form>
+        {form}
       </div>
     )
   }
