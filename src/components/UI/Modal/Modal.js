@@ -12,8 +12,8 @@ const modal = props => {
     <>
       <Backdrop show={props.show} onClick={props.modalClose} />
       <div 
-      className='Modal'
-      style={style} >
+       className='Modal'
+       style={style} >
         {props.children}
       </div>
     </>

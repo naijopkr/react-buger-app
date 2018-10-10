@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
-import IngredientList, { IngredientPrice } from '../../components/Burger/BurgerIngredient/IngredientList'
+import { IngredientPrice } from '../../components/Burger/BurgerIngredient/IngredientList'
 import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import Spinner from '../../components/UI/Spinner/Spinner'
@@ -10,16 +10,18 @@ import axios from '../../axios-orders'
 
 class BurgerBuilder extends Component {
   state = {
-    ingredients: {
-      [IngredientList.SALAD]: 0,
-      [IngredientList.BACON]: 0,
-      [IngredientList.CHEESE]: 0,
-      [IngredientList.MEAT]: 0
-    },
+    ingredients: null,
     totalPrice: 400,
     purchasable: false,
     checkout: false,
     loading: false
+  }
+
+  componentDidMount = async () => {
+    const res = await axios.get('/ingredients.json')
+    if (res && res.status === 200) {
+      this.setState({ ingredients: res.data })
+    } 
   }
 
   checkoutHandler = () => {
@@ -31,27 +33,17 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    this.setState({ loading: true })
-    const order = {
-      ingrendients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: 'John Smith',
-        address: {
-          street: '1st Avenue',
-          zipCode: '121523',
-          country: 'Colombia'
-        },
-        email: 'jsmith@burger.com'
-      },
-      deliveryMethod: 'fastest'
+    let queryParams = []
+    for (let key in this.state.ingredients) {
+      queryParams.push(
+        `${encodeURIComponent(key)}=${encodeURIComponent(this.state.ingredients[key])}`
+      )
     }
-    axios.post('/orders', order)
-      .then(res => this.setState({ loading: false, checkout: false }))
-      .catch(err => {
-        this.setState({ loading: false, checkout: false })
-        console.log(err)
-      })
+    queryParams = queryParams.join('&')
+    this.props.history.push({
+      pathname: '/checkout',
+      search: `?${queryParams}`
+    })
   }
 
   updatePurchaseState = ingredients => {
@@ -109,4 +101,4 @@ class BurgerBuilder extends Component {
   }
 }
 
-export default withErrorHandler(BurgerBuilder)
+export default withErrorHandler(BurgerBuilder, axios)
