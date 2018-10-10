@@ -21,7 +21,7 @@ class ContactData extends Component {
 
   getPrice = () => {
     let price = 400
-    const { ingredients } = this.state
+    const { ingredients } = this.props
     for (let key in ingredients) {
       price += ingredients[key]*IngredientPrice[key]
     }
@@ -32,7 +32,7 @@ class ContactData extends Component {
     event.preventDefault()
     this.setState({ loading: true })
     const order = {
-      ingrendients: this.state.ingredients,
+      ingredients: this.props.ingredients,
       price: this.getPrice(),
       customer: {
         name: 'John Smith',
@@ -51,7 +51,7 @@ class ContactData extends Component {
       this.props.history.push('/')
     })
     .catch(err => {
-      this.setState({ loading: false, checkout: false })
+      this.setState({ loading: false })
       console.log(err)
     })
   }
