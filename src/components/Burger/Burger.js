@@ -3,7 +3,7 @@ import React from 'react'
 import './Burger.css'
 
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient'
-import IngredientList from './BurgerIngredient/IngredientList'
+import IngredientList from '../../store/IngredientList'
 
 const burger = props => {
   const { ingredients } = props

@@ -1,6 +1,6 @@
 import React from 'react'
 import BuildControl from './BuildControl/BuildControl'
-import IngredientList from '../BurgerIngredient/IngredientList' 
+import IngredientList from '../../../store/IngredientList' 
 import './BuildControls.css'
 
 const buildControls = props => {
@@ -11,6 +11,7 @@ const buildControls = props => {
       ingredientsArray.push(
         <BuildControl 
          onAdd={props.onAdd} 
+         onRemove={props.onRemove}
          label={label} 
          key={key}
          disabledButton={props.disabledButtons[label]} />

@@ -1,5 +1,5 @@
 import React from 'react'
-import IngredientList from './IngredientList'
+import IngredientList from '../../../store/IngredientList'
 import './BurgerIngredient.css'
 
 const burgerIngredient = props => {

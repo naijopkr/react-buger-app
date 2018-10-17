@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 import axios from '../../../axios-orders'
 
 import Button from '../../UI/Button/Button'
 import Spinner from '../../UI/Spinner/Spinner'
 import Input from '../../UI/Input/Input'
-import { IngredientPrice } from '../../Burger/BurgerIngredient/IngredientList'
 
 import './ContactData.css'
 
@@ -89,15 +89,6 @@ class ContactData extends Component {
     loading: false
   }
 
-  getPrice = () => {
-    let price = 400
-    const { ingredients } = this.props
-    for (let key in ingredients) {
-      price += ingredients[key]*IngredientPrice[key]
-    }
-    return price
-  }
-
   orderHandler = event => {
     event.preventDefault()
     this.setState({ loading: true })
@@ -108,7 +99,7 @@ class ContactData extends Component {
     }
     const order = {
       ingredients: this.props.ingredients,
-      price: this.getPrice(),
+      price: this.props.totalPrice,
       orderData: formData
     }
     axios.post('/orders.json', order)
@@ -179,4 +170,11 @@ class ContactData extends Component {
   }
 }
 
-export default withRouter(ContactData)
+const mapStateToProps = state => ({ 
+  ingredients: state.ingredients,
+  totalPrice: state.totalPrice 
+})
+
+ContactData = withRouter(ContactData)
+
+export default connect(mapStateToProps)(ContactData)

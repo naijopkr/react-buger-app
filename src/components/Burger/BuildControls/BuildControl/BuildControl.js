@@ -5,12 +5,12 @@ const buildControl = props => (
     <div className='Label'>{props.label}</div>
     <button 
      disabled={props.disabledButton}
-     onClick={() => props.onAdd(props.label, -1)} 
+     onClick={() => props.onRemove(props.label)} 
      className='Less'>
       Less
     </button>
     <button 
-     onClick={() => props.onAdd(props.label, 1)} 
+     onClick={() => props.onAdd(props.label)} 
      className='More'>
       More
     </button>
