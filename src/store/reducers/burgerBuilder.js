@@ -31,6 +31,9 @@ const reducer = (state = initialState, action) => {
         ...state,
         ingredients: action.payload
       }
+    case actionType.INIT_INGREDIENTS_FAILED:
+      alert(action.payload)
+      return state
     default:
       return state
   }

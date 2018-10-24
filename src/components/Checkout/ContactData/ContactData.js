@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import axios from '../../../axios-orders'
 
 import Button from '../../UI/Button/Button'
 import Spinner from '../../UI/Spinner/Spinner'
 import Input from '../../UI/Input/Input'
+
+import * as actions from '../../../store/actions'
 
 import './ContactData.css'
 
@@ -102,15 +103,7 @@ class ContactData extends Component {
       price: this.props.totalPrice,
       orderData: formData
     }
-    axios.post('/orders.json', order)
-    .then(res => {
-      this.setState({ loading: false })
-      this.props.history.push('/')
-    })
-    .catch(err => {
-      this.setState({ loading: false })
-      console.log(err)
-    })
+    this.props.purchaseBurger(order, this.props.history)
   }
 
   validate = (value, rules) => {
@@ -175,6 +168,10 @@ const mapStateToProps = state => ({
   totalPrice: state.totalPrice 
 })
 
+const mapDispatchToProps = dispatch => ({
+  purchaseBurger: (orderData, history) => dispatch(actions.purchaseBurger(orderData, history))
+})
+
 ContactData = withRouter(ContactData)
 
-export default connect(mapStateToProps)(ContactData)
+export default connect(mapStateToProps, mapDispatchToProps)(ContactData)

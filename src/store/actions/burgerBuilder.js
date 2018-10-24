@@ -16,8 +16,10 @@ export const removeIngredient = ingredient => {
 }
 
 export const initIngredients = () => async dispatch => {
-  const res = await axios.get('/ingredients.json')
-  if (res && res.status === 200) {
+  try {
+    const res = await axios.get('/ingredients.json')
     dispatch({ type: actionTypes.INIT_INGREDIENTS, payload: res.data })
+  } catch(err) {
+    dispatch({ type: actionTypes.INIT_INGREDIENTS_FAILED, payload: err })
   }
 }
