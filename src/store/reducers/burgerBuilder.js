@@ -1,13 +1,8 @@
-import * as actionType from './actions'
-import IngredientList, { IngredientPrice } from './IngredientList'
+import * as actionType from '../actions/actionTypes'
+import { IngredientPrice } from '../IngredientList'
 
 const initialState = {
-  ingredients: {
-    [IngredientList.SALAD]: 0,
-    [IngredientList.MEAT]: 0,
-    [IngredientList.CHEESE]: 0,
-    [IngredientList.BACON]: 0
-  },
+  ingredients: null,
   totalPrice: 400
 }
 
@@ -30,6 +25,11 @@ const reducer = (state = initialState, action) => {
           [action.payload.ingredient]: state.ingredients[action.payload.ingredient] - 1
         },
         totalPrice: state.totalPrice - IngredientPrice[action.payload.ingredient]
+      }
+    case actionType.INIT_INGREDIENTS:
+      return {
+        ...state,
+        ingredients: action.payload
       }
     default:
       return state

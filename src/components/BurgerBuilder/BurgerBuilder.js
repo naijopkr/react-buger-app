@@ -7,10 +7,7 @@ import { IngredientPrice } from '../../store/IngredientList'
 import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import Spinner from '../../components/UI/Spinner/Spinner'
-import withErrorHandler from '../HOC/withErrorHandler/withErrorHandler'
-import * as actionType from '../../store/actions'
-
-import axios from '../../axios-orders'
+import * as actions from '../../store/actions'
 
 class BurgerBuilder extends Component {
   state = {
@@ -19,11 +16,8 @@ class BurgerBuilder extends Component {
     loading: false
   }
 
-  componentDidMount = async () => {
-    /* const res = await axios.get('/ingredients.json')
-    if (res && res.status === 200) {
-      this.setState({ ingredients: res.data })
-    }  */
+  componentDidMount = () => {
+    this.props.initIngredients();
   }
 
   checkoutHandler = () => {
@@ -80,7 +74,8 @@ class BurgerBuilder extends Component {
     }
 
     return (
-      <>
+      this.props.ingredients
+      ? <>
         <Modal show={this.state.checkout} 
          modalClose={this.puchaseCancelHandler}>
           {orderSummary}
@@ -94,6 +89,7 @@ class BurgerBuilder extends Component {
          purchasable={this.getPurchasable()}
          price={this.props.totalPrice} />
       </>
+      : null
     )
   }
 }
@@ -104,18 +100,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  addIngredient: ingredient => dispatch(
-    { 
-      type: actionType.ADD_INGREDIENT,
-      payload: { ingredient: ingredient }
-    }),
-  removeIngredient: ingredient => dispatch(
-    { 
-      type: actionType.REMOVE_INGREDIENT,
-      payload: { ingredient: ingredient }
-    })
+  addIngredient: ingredient => dispatch(actions.addIngredient(ingredient)),
+  removeIngredient: ingredient => dispatch(actions.removeIngredient(ingredient)),
+  initIngredients: () => dispatch(actions.initIngredients())
 })
-
-BurgerBuilder = withErrorHandler(BurgerBuilder, axios)
 
 export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder)
