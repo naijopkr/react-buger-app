@@ -150,7 +150,7 @@ class ContactData extends Component {
         </Button>
       </form>
     )
-    if (this.state.loading) {
+    if (this.props.loading) {
       form = <Spinner />
     }
 
@@ -165,7 +165,8 @@ class ContactData extends Component {
 
 const mapStateToProps = state => ({ 
   ingredients: state.ingredients,
-  totalPrice: state.totalPrice 
+  totalPrice: state.totalPrice,
+  loading: state.loading 
 })
 
 const mapDispatchToProps = dispatch => ({
