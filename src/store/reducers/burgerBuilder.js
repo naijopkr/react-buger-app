@@ -29,7 +29,8 @@ const reducer = (state = initialState, action) => {
     case actionType.INIT_INGREDIENTS:
       return {
         ...state,
-        ingredients: action.payload
+        ingredients: action.payload,
+        totalPrice: 400
       }
     case actionType.INIT_INGREDIENTS_FAILED:
       alert(action.payload)
