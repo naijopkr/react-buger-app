@@ -21,3 +21,13 @@ export const purchaseBurgerStart = () => {
     type: actionTypes.PURCHASE_BURGER_START
   }
 }
+
+export const fetchOrders = () => async dispatch => {
+  dispatch({ type: actionTypes.LOADING_ORDERS })
+  try {
+    const res = await axios.get('/orders.json')
+    dispatch({ type: actionTypes.FETCH_ORDERS, payload: res.data })
+  } catch (err) {
+    alert(err)
+  }
+}

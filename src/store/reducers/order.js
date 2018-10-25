@@ -27,6 +27,24 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false
       }
+    case actionTypes.LOADING_ORDERS:
+      return {
+        ...state,
+        loading: true
+      }
+    case actionTypes.FETCH_ORDERS:
+      const orders = []
+      for (let key in action.payload) {
+        orders.push({
+          ...action.payload[key],
+          id: key
+        })
+      }
+      return {
+        ...state,
+        orders,
+        loading: false 
+      }
     default:
       return state
   }
