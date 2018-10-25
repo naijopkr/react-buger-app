@@ -6,35 +6,47 @@ const initialState = {
   totalPrice: 400
 }
 
+const addIngredient = (state, action) => {
+  return {
+    ...state,
+    ingredients: {
+      ...state.ingredients,
+      [action.payload.ingredient]: state.ingredients[action.payload.ingredient] + 1
+    },
+    totalPrice: state.totalPrice + IngredientPrice[action.payload.ingredient]
+  }
+}
+
+const removeIngredient = (state, action) => {
+  return {
+    ...state,
+    ingredients: {
+      ...state.ingredients,
+      [action.payload.ingredient]: state.ingredients[action.payload.ingredient] - 1
+    },
+    totalPrice: state.totalPrice - IngredientPrice[action.payload.ingredient]
+  }
+}
+
+const initIngredients = (state, action) => {
+  return {
+    ...state,
+    ingredients: action.payload,
+    totalPrice: 400
+  }
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionType.ADD_INGREDIENT:
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.payload.ingredient]: state.ingredients[action.payload.ingredient] + 1
-        },
-        totalPrice: state.totalPrice + IngredientPrice[action.payload.ingredient]
-      }
+      return addIngredient(state, action)
     case actionType.REMOVE_INGREDIENT:
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.payload.ingredient]: state.ingredients[action.payload.ingredient] - 1
-        },
-        totalPrice: state.totalPrice - IngredientPrice[action.payload.ingredient]
-      }
+      return removeIngredient(state, action)
     case actionType.INIT_INGREDIENTS:
-      return {
-        ...state,
-        ingredients: action.payload,
-        totalPrice: 400
-      }
+      return initIngredients(state, action)
     case actionType.INIT_INGREDIENTS_FAILED:
       alert(action.payload)
-      return state
+      break
     default:
       return state
   }
