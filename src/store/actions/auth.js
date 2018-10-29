@@ -20,7 +20,7 @@ export const auth = (email, password, isSignUp) => async dispatch => {
 
   let authAPI = 'https://www.googleapis.com/' + 
     `identitytoolkit/v3/relyingparty/${authMethod}` +
-    '?key='
+    '?key=' + process.env.REACT_APP_FIREBASE_API_KEY
 
   try {
     const res = await axios.post(authAPI, authData)
