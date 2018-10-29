@@ -24,7 +24,6 @@ export const auth = (email, password, isSignUp) => async dispatch => {
 
   try {
     const res = await axios.post(authAPI, authData)
-    console.log(res)
     dispatch({ type: actionTypes.AUTH_SUCCESS, payload: res.data })
   } catch (err) {
     console.log(err)
