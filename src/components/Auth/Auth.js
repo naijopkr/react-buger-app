@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 import * as actions from '../../store/actions'
 
@@ -103,9 +104,15 @@ class Auth extends Component {
     if (this.props.error) {
       errorMessage = <p>{this.props.error.message}</p>
     }
+
+    let authRedirect = null
+    if (this.props.isAuth) {
+      authRedirect = <Redirect to='/' />
+    }
     
     return (
       <div className='Auth'>
+        {authRedirect}
         <h4>Enter your credentials</h4>
         {errorMessage}
         {form}
@@ -116,7 +123,8 @@ class Auth extends Component {
 
 const mapStateToProps = state => ({
   loading: state.auth.loading,
-  error: state.auth.error
+  error: state.auth.error,
+  isAuth: state.auth.token !== null
 })
 
 const mapDispatchToProps = {
