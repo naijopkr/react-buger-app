@@ -11,6 +11,7 @@ import Spinner from '../UI/Spinner/Spinner'
 import './Auth.css'
 
 class Auth extends Component {
+
   state = {
     authForm: {
       email: {
@@ -40,6 +41,12 @@ class Auth extends Component {
     }
   }
 
+  componentDidMount = () => {
+    if (!this.props.building && this.props.authRedirectPath !== '/') {
+      this.props.setAuthRedirectPath('/')
+    }
+  }
+
   onSubmitHandler = isSignUp => {
     this.props.auth(
       this.state.authForm.email.value,
@@ -59,7 +66,7 @@ class Auth extends Component {
 
   validate = (value, rules) => {
     let isValid = false
-    
+
     if (rules.required) {
       isValid = value.trim() !== ''
     }
@@ -67,14 +74,14 @@ class Auth extends Component {
     return isValid
   }
 
-  renderFormElements  = () => {
+  renderFormElements = () => {
     const { authForm } = this.state
     let formElementsArray = []
     for (let key in authForm) {
       formElementsArray.push(
-        <Input 
+        <Input
           key={key}
-          elementType={authForm[key].elementType} 
+          elementType={authForm[key].elementType}
           elementConfig={authForm[key].elementConfig}
           onChange={event => this.inputChangedHandler(event, key)} />
       )
@@ -107,9 +114,9 @@ class Auth extends Component {
 
     let authRedirect = null
     if (this.props.isAuth) {
-      authRedirect = <Redirect to='/' />
+      authRedirect = <Redirect to={this.props.authRedirectPath} />
     }
-    
+
     return (
       <div className='Auth'>
         {authRedirect}
@@ -124,11 +131,14 @@ class Auth extends Component {
 const mapStateToProps = state => ({
   loading: state.auth.loading,
   error: state.auth.error,
-  isAuth: state.auth.token !== null
+  isAuth: state.auth.token !== null,
+  building: state.burgerBuilder.building,
+  authRedirectPath: state.auth.authRedirectPath
 })
 
 const mapDispatchToProps = {
-  auth: actions.auth
+  auth: actions.auth,
+  setAuthRedirectPath: actions.setAuthRedirectPath
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth)

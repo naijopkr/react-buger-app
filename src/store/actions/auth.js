@@ -43,5 +43,8 @@ export const auth = (email, password, isSignUp) => async dispatch => {
       dispatch({ type: actionTypes.AUTH_FAILED, payload: error })
     }
   }
+}
 
+export const setAuthRedirectPath = path => dispatch => {
+  dispatch({ type: actionTypes.SET_AUTH_REDIRECT_PATH, payload: path })
 }

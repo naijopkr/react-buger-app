@@ -19,13 +19,15 @@ const buildControls = props => {
     }
   }
 
+  const orderButton = props.isAuth ? 'ORDER NOW' : 'SIGN UP TO ORDER'
+
   return <div className='BuildControls'>
     <p>Current price: <strong>${(props.price/100).toFixed(2)}</strong></p>
     {ingredientsArray}
     <button 
      className='OrderButton'
      onClick={props.onCheckout}
-     disabled={!props.purchasable}>ORDER NOW</button>
+     disabled={!props.purchasable}>{orderButton}</button>
   </div>
 }
 

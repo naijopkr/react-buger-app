@@ -3,7 +3,8 @@ import { IngredientPrice } from '../IngredientList'
 
 const initialState = {
   ingredients: null,
-  totalPrice: 400
+  totalPrice: 400,
+  building: false
 }
 
 const addIngredient = (state, action) => {
@@ -13,7 +14,8 @@ const addIngredient = (state, action) => {
       ...state.ingredients,
       [action.payload.ingredient]: state.ingredients[action.payload.ingredient] + 1
     },
-    totalPrice: state.totalPrice + IngredientPrice[action.payload.ingredient]
+    totalPrice: state.totalPrice + IngredientPrice[action.payload.ingredient],
+    building: true
   }
 }
 
@@ -24,7 +26,8 @@ const removeIngredient = (state, action) => {
       ...state.ingredients,
       [action.payload.ingredient]: state.ingredients[action.payload.ingredient] - 1
     },
-    totalPrice: state.totalPrice - IngredientPrice[action.payload.ingredient]
+    totalPrice: state.totalPrice - IngredientPrice[action.payload.ingredient],
+    building: true
   }
 }
 
@@ -32,7 +35,8 @@ const initIngredients = (state, action) => {
   return {
     ...state,
     ingredients: action.payload,
-    totalPrice: 400
+    totalPrice: 400,
+    building: false
   }
 }
 
