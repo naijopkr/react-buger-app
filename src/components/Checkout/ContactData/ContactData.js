@@ -103,7 +103,7 @@ class ContactData extends Component {
       price: this.props.totalPrice,
       orderData: formData
     }
-    this.props.purchaseBurger(order, this.props.history)
+    this.props.purchaseBurger(order, this.props.history, this.props.token)
   }
 
   validate = (value, rules) => {
@@ -143,9 +143,9 @@ class ContactData extends Component {
 
   render = () => {
     let form = (
-      <form>
+      <form onSubmit={this.orderHandler}>
         {this.renderFormElements()}
-        <Button btnType='Success' onClick={this.orderHandler}>
+        <Button btnType='Success'>
           ORDER
         </Button>
       </form>
@@ -166,11 +166,12 @@ class ContactData extends Component {
 const mapStateToProps = state => ({ 
   ingredients: state.burgerBuilder.ingredients,
   totalPrice: state.burgerBuilder.totalPrice,
-  loading: state.order.loading 
+  loading: state.order.loading,
+  token: state.auth.token 
 })
 
 const mapDispatchToProps = dispatch => ({
-  purchaseBurger: (orderData, history) => dispatch(actions.purchaseBurger(orderData, history))
+  purchaseBurger: (orderData, history, token) => dispatch(actions.purchaseBurger(orderData, history, token))
 })
 
 ContactData = withRouter(ContactData)

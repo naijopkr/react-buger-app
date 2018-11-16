@@ -13,7 +13,7 @@ import './Orders.css'
 class Orders extends Component {
 
   componentDidMount = () => {
-    this.props.fetchOrders()
+    this.props.fetchOrders(this.props.token)
   }
 
   renderOrders = () => {
@@ -43,11 +43,12 @@ class Orders extends Component {
 
 const mapStateToProps = state => ({
   orders: state.order.orders,
-  loading: state.order.loading
+  loading: state.order.loading,
+  token: state.auth.token
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchOrders: () => dispatch(actions.fetchOrders())
+  fetchOrders: token => dispatch(actions.fetchOrders(token))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios))
