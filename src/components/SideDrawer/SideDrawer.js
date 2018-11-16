@@ -10,7 +10,9 @@ const sideDrawer = props => {
   return (
     <>
       <BackDrop show={props.open} onClick={props.onClose} />
-      <div className={`SideDrawer ${props.open ? 'Open' : 'Close'}`}>
+      <div 
+        className={`SideDrawer ${props.open ? 'Open' : 'Close'}`}
+        onClick={props.closed}>
         <Logo className='SideDrawerLogo' />
         <nav>
           <NavigationItems isAuth={props.isAuth} />
