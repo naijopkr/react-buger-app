@@ -15,7 +15,7 @@ export const auth = (email, password, isSignUp) => async dispatch => {
     password,
     returnSecureToken: true
   }
-  console.log(isSignUp)
+  
   let authMethod = isSignUp ? 'signupNewUser' : 'verifyPassword'
 
   let authAPI = 'https://www.googleapis.com/' + 
@@ -26,8 +26,8 @@ export const auth = (email, password, isSignUp) => async dispatch => {
     const res = await axios.post(authAPI, authData)
     dispatch({ type: actionTypes.AUTH_SUCCESS, payload: res.data })
   } catch (err) {
-    console.log(err)
-    dispatch({ type: actionTypes.AUTH_FAILED, payload: err })
+    const { error } = err.response.data
+    dispatch({ type: actionTypes.AUTH_FAILED, payload: error })
   }
 
 }

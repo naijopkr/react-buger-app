@@ -98,18 +98,29 @@ class Auth extends Component {
     if (this.props.loading) {
       form = <Spinner />
     }
+
+    let errorMessage = null
+    if (this.props.error) {
+      errorMessage = <p>{this.props.error.message}</p>
+    }
     
     return (
       <div className='Auth'>
         <h4>Enter your credentials</h4>
+        {errorMessage}
         {form}
       </div>
     )
   }
 }
 
+const mapStateToProps = state => ({
+  loading: state.auth.loading,
+  error: state.auth.error
+})
+
 const mapDispatchToProps = {
   auth: actions.auth
 }
 
-export default connect(null, mapDispatchToProps)(Auth)
+export default connect(mapStateToProps, mapDispatchToProps)(Auth)
