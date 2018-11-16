@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 
 import Layout from './components/Layout/Layout'
 import BurgerBuilder from './components/BurgerBuilder/BurgerBuilder'
@@ -11,15 +11,17 @@ import Logout from './components/Auth/Logout/Logout'
 class App extends Component {
 
   render() {
+
     return (
       <div>
         <Layout>
           <Switch>
+            <Route path='/auth' component={Auth} />
             <Route path='/checkout' component={Checkout} />
             <Route path='/orders' component={Orders} />
-            <Route path='/auth' component={Auth} />
             <Route path='/logout' component={Logout} />
-            <Route path='/' component={BurgerBuilder} />
+            <Route path='/' exact component={BurgerBuilder} />
+            <Redirect to='/' />
           </Switch>
         </Layout>
       </div>
@@ -27,4 +29,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App

@@ -23,10 +23,16 @@ export const purchaseBurgerStart = () => {
   }
 }
 
-export const fetchOrders = token => async dispatch => {
+export const fetchOrders = (token, userId) => async dispatch => {
   dispatch({ type: actionTypes.LOADING_ORDERS })
   try {
-    const res = await axios.get('/orders.json?auth=' + token)
+    const res = await axios.get('/orders.json', {
+      params: {
+        auth: token,
+        orderBy: '"userId"',
+        equalTo: '"' + userId + '"'
+      }
+    })
     dispatch({ type: actionTypes.FETCH_ORDERS, payload: res.data })
   } catch (err) {
     console.log(err)
