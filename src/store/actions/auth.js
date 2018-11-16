@@ -8,6 +8,12 @@ export const authStart = () => {
   )
 }
 
+export const checkAuthTimeout = (expirationTime) => dispatch => {
+  setTimeout(() => {
+    dispatch({ type: actionTypes.AUTH_LOGOUT })
+  }, 1000)
+}
+
 export const auth = (email, password, isSignUp) => async dispatch => {
   dispatch(authStart())
   const authData = {
@@ -25,9 +31,13 @@ export const auth = (email, password, isSignUp) => async dispatch => {
   try {
     const res = await axios.post(authAPI, authData)
     dispatch({ type: actionTypes.AUTH_SUCCESS, payload: res.data })
+    dispatch(checkAuthTimeout(res.data.expiresIn))
   } catch (err) {
-    const { error } = err.response.data
-    dispatch({ type: actionTypes.AUTH_FAILED, payload: error })
+    console.log(err)
+    if (err.response) {
+      const { error } = err.response.data
+      dispatch({ type: actionTypes.AUTH_FAILED, payload: error })
+    }
   }
 
 }
