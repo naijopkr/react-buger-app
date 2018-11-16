@@ -8,6 +8,10 @@ export const authStart = () => {
   )
 }
 
+export const logout = () => dispatch => {
+  dispatch({ type: actionTypes.AUTH_LOGOUT })
+}
+
 export const checkAuthTimeout = (expirationTime) => dispatch => {
   setTimeout(() => {
     dispatch({ type: actionTypes.AUTH_LOGOUT })

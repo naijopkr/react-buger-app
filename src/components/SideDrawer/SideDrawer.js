@@ -13,7 +13,7 @@ const sideDrawer = props => {
       <div className={`SideDrawer ${props.open ? 'Open' : 'Close'}`}>
         <Logo className='SideDrawerLogo' />
         <nav>
-          <NavigationItems />
+          <NavigationItems isAuth={props.isAuth} />
         </nav>
       </div>
     </>
